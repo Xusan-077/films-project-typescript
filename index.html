@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./main.css">
+</head>
+
+<body>
+
+    <section>
+
+        <div class="top">
+
+            <div class="sort-div">
+                <form class="sort-form">
+                    <label for="SortId">
+                        Sort To First Letter
+                    </label>
+                    <select id="SortId" class="sort-select">
+                        <option value="All">Default</option>
+                        <option value="A-Z">A-Z</option>
+                        <option value="Z-A">Z-A</option>
+                    </select>
+                    <button class="btn">filter</button>
+                </form>
+            </div>
+
+            <div class="sort-from-genres-div">
+                <form class="sort-from-genres-form">
+                    <label for="SortId">
+                        Sort To Genres
+                    </label>
+                    <select class="sort-from-genres-select">
+                        <option value="All">All</option>
+                    </select>
+                    <button class="btn">filter</button>
+                </form>
+            </div>
+
+            <div class="search-div">
+                <form class="search-form">
+                    <input type="text" class="search-input" placeholder="search...">
+                    <button class="btn">search</button>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="container">
+            <div class="bottom">
+                <ul class="list"></ul>
+            </div>
+        </div>
+
+    </section>
+
+    <script src="./dist/index.js"></script>
+</body>
+
+</html>
+
+</html>

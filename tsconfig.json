@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "outDir": "dist",
+    "lib": [
+      "es2016",
+      "dom"
+    ],
+    "strict": true
+  },
+  "include": [
+    "./**/*.ts"
+  ]
+}
