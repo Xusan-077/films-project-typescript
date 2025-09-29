@@ -456,7 +456,7 @@ function render(array: filmType, list: HTMLUListElement) {
     ).getFullYear()}</p>
             <p class="item_genres">genres: ${el.genres}</p>
             <div class="item_btns">
-            <button class="item__btn item_btn_edit">edit</button>
+                <button class="item__btn item_btn_edit">edit</button>
                 <button class="item__btn item_btn_delete">delete</button>
             </div>
         </div>
@@ -529,3 +529,10 @@ elSearchForm.onsubmit = (evt: Event) => {
 
 render(filmsList, elList);
 renderGenres();
+
+const elDeletebtn = document.querySelector(".item_btn_delete") as HTMLButtonElement
+const elDeleteModalDiv = document.querySelector(".modal-div") as HTMLDivElement
+
+elDeletebtn.onclick = () => {
+  elDeleteModalDiv.classList.toggle("active")
+}
