@@ -361,6 +361,7 @@ let filmsList = [
         genres: ["Music", "Documentary"],
     },
 ];
+let ItemId;
 const elList = document.querySelector(".list");
 const elSortToGenresSelect = document.querySelector(".sort-from-genres-select");
 const elSortToGenresForm = document.querySelector(".sort-from-genres-form");
@@ -373,7 +374,7 @@ function render(array, list) {
     list.innerHTML = "";
     array.forEach((el) => {
         list.innerHTML += `
-      <li class="item" data-id="${el.id}">
+      <li class="item">
         <img class="item_img" src="${el.poster}" alt="">
         <div class="item_text">
             <p class="item_id">id: ${el.id}</p>
@@ -381,8 +382,8 @@ function render(array, list) {
             <p class="item_release_date">date: ${new Date(el.release_date * 1000).getFullYear()}</p>
             <p class="item_genres">genres: ${el.genres}</p>
             <div class="item_btns">
-            <button class="item__btn item_btn_edit">edit</button>
-                <button class="item__btn item_btn_delete">delete</button>
+                <button class="item__btn item_btn_delete" data-id="${el.id}">delete</button>
+                <button class="item__btn item_btn_edit">edit</button>
             </div>
         </div>
       </li
@@ -440,3 +441,35 @@ elSearchForm.onsubmit = (evt) => {
 };
 render(filmsList, elList);
 renderGenres();
+const elDeletebtn = document.querySelectorAll(".item_btn_delete");
+const elDeleteModalDiv = document.querySelector(".modal-div");
+const elCloseBtn = document.querySelectorAll(".delete-modal-x-btn");
+const elCloseBtn2 = document.querySelectorAll(".cancel");
+const elItem = document.querySelector(".item");
+const elModalDeleteBtn = document.querySelector(".delete");
+const elDeleteModalSpan = document.querySelector(".delete-modal-title-span");
+elDeletebtn.forEach((el) => {
+    el.onclick = () => {
+        var _a;
+        elDeleteModalDiv.classList.add("block"); // faqat ochadi
+        ItemId = Number(el.dataset.id);
+        let find = filmsList.find((el) => Number(el.id) == Number(ItemId));
+        elDeleteModalSpan.innerHTML = (_a = find === null || find === void 0 ? void 0 : find.title) !== null && _a !== void 0 ? _a : "No title";
+        console.log("Click");
+    };
+});
+elCloseBtn.forEach((el) => {
+    el.onclick = () => {
+        elDeleteModalDiv.classList.remove("block");
+    };
+});
+elCloseBtn2.forEach((el) => {
+    el.onclick = () => {
+        elDeleteModalDiv.classList.remove("block");
+    };
+});
+elModalDeleteBtn.onclick = () => {
+    let filter = filmsList.filter((el) => Number(el.id) != Number(ItemId));
+    render(filter, elList);
+    elDeleteModalDiv.classList.remove("block");
+};

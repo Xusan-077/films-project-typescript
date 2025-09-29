@@ -423,6 +423,9 @@ type filmobj = {
   genres: string[];
 }
 
+let ItemId: number;
+
+
 const elList = document.querySelector(".list") as HTMLUListElement;
 
 const elSortToGenresSelect = document.querySelector(
@@ -446,7 +449,7 @@ function render(array: filmType, list: HTMLUListElement) {
 
   array.forEach((el) => {
     list.innerHTML += `
-      <li class="item" data-id="${el.id}">
+      <li class="item">
         <img class="item_img" src="${el.poster}" alt="">
         <div class="item_text">
             <p class="item_id">id: ${el.id}</p>
@@ -456,8 +459,8 @@ function render(array: filmType, list: HTMLUListElement) {
     ).getFullYear()}</p>
             <p class="item_genres">genres: ${el.genres}</p>
             <div class="item_btns">
+                <button class="item__btn item_btn_delete" data-id="${el.id}">delete</button>
                 <button class="item__btn item_btn_edit">edit</button>
-                <button class="item__btn item_btn_delete">delete</button>
             </div>
         </div>
       </li
@@ -530,9 +533,45 @@ elSearchForm.onsubmit = (evt: Event) => {
 render(filmsList, elList);
 renderGenres();
 
-const elDeletebtn = document.querySelector(".item_btn_delete") as HTMLButtonElement
+const elDeletebtn = document.querySelectorAll<HTMLButtonElement>(".item_btn_delete")
 const elDeleteModalDiv = document.querySelector(".modal-div") as HTMLDivElement
 
-elDeletebtn.onclick = () => {
-  elDeleteModalDiv.classList.toggle("active")
+const elCloseBtn = document.querySelectorAll<HTMLButtonElement>(".delete-modal-x-btn")
+const elCloseBtn2 = document.querySelectorAll<HTMLButtonElement>(".cancel")
+
+const elItem = document.querySelector(".item") as HTMLLIElement
+
+const elModalDeleteBtn = document.querySelector(".delete") as HTMLButtonElement
+
+const elDeleteModalSpan = document.querySelector(".delete-modal-title-span") as HTMLSpanElement
+
+elDeletebtn.forEach((el) => {
+  el.onclick = () => {
+    elDeleteModalDiv.classList.toggle("block")
+
+    ItemId = Number(el.dataset.id);
+
+    let find = filmsList.find((el) => Number(el.id) == Number(ItemId))
+    elDeleteModalSpan.innerHTML = find?.title!
+    console.log("Click");
+  }
+})
+
+elCloseBtn.forEach((el) => {
+  el.onclick = () => {
+    elDeleteModalDiv.classList.remove("block")
+  }
+})
+
+elCloseBtn2.forEach((el) => {
+  el.onclick = () => {
+    elDeleteModalDiv.classList.remove("block")
+  }
+})
+
+elModalDeleteBtn.onclick = () => {
+  let filter = filmsList.filter((el) => Number(el.id) != Number(ItemId))
+
+  render(filter, elList)
+  elDeleteModalDiv.classList.remove("block")
 }
