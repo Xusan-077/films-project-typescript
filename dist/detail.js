@@ -1,5 +1,6 @@
 "use strict";
-let filmsList = [
+var _a, _b;
+let filmList = [
     {
         id: "287947",
         title: "Shazam!",
@@ -361,124 +362,23 @@ let filmsList = [
         genres: ["Music", "Documentary"],
     },
 ];
-let ItemId;
-const elList = document.querySelector(".list");
-const elSortToGenresSelect = document.querySelector(".sort-from-genres-select");
-const elSortToGenresForm = document.querySelector(".sort-from-genres-form");
-const elSelectForm = document.querySelector(".search-form");
-const elSortToLetterForm = document.querySelector(".sort-form");
-const elSortToLetterSelect = document.querySelector(".sort-select");
-const elSearchForm = document.querySelector(".search-form");
-const elSearchInput = document.querySelector(".search-input");
-function render(array, list) {
-    list.innerHTML = "";
-    array.forEach((el) => {
-        list.innerHTML += `
-             <li class="item">
-
-            <img class="item_img" src="${el.poster}" alt="">
-            <div class="item_text">
-                <p class="item_id">id: ${el.id}</p>
-                <p class="item_title">title: ${el.title}</p>
-                <p class="item_release_date">date: ${new Date(el.release_date * 1000).getFullYear()}</p>
-                <p class="item_genres">genres: ${el.genres}</p>
-                <div class="item_btns">
-                    <div class="btn-div">
-                        <button class="item__btn item_btn_delete" data-id="${el.id}">delete</button>
-                        <button class="item__btn item_btn_edit">edit</button>
-                    </div>
-
-                    <a class="link" href="./detail.html?id=${el.id}">
-                        more
-                    </a>
-
-                </div>
-            </div>
-        </li>
-    `;
-    });
-}
-function renderGenres() {
-    const reduce = filmsList.reduce((total, el) => {
-        el.genres.forEach((g) => {
-            if (!total.includes(g)) {
-                total.push(g);
-            }
-        });
-        return total;
-    }, []);
-    reduce.forEach((el) => {
-        elSortToGenresSelect.innerHTML += `
-        <option value="${el}">${el}</option>
-      `;
-    });
-}
-elSortToLetterForm.onsubmit = (evt) => {
-    evt.preventDefault();
-    if (elSortToLetterSelect.value === "All") {
-        render(filmsList, elList);
-    }
-    if (elSortToLetterSelect.value === "A-Z") {
-        filmsList.sort((a, b) => a.title.localeCompare(b.title));
-    }
-    if (elSortToLetterSelect.value === "Z-A") {
-        filmsList.sort((a, b) => b.title.localeCompare(a.title));
-    }
-    render(filmsList, elList);
-};
-elSortToGenresForm.onsubmit = (evt) => {
-    evt.preventDefault();
-    if (elSortToGenresSelect.value == "All") {
-        render(filmsList, elList);
-    }
-    else {
-        let filter = filmsList.filter((el) => el.genres.includes(elSortToGenresSelect.value));
-        render(filter, elList);
-    }
-};
-elSearchForm.onsubmit = (evt) => {
-    evt.preventDefault();
-    let filter = filmsList.filter((el) => el.title.toLowerCase().includes(elSearchInput.value.toLocaleLowerCase()));
-    render(filter, elList);
-    if (filter.length == 0) {
-        let p = document.createElement("p");
-        p.innerHTML = "There is no such movie.";
-        p.classList.toggle("list-active");
-        elList.appendChild(p);
-    }
-};
-render(filmsList, elList);
-renderGenres();
-const elDeletebtn = document.querySelectorAll(".item_btn_delete");
-const elDeleteModalDiv = document.querySelector(".modal-div");
-const elCloseBtn = document.querySelectorAll(".delete-modal-x-btn");
-const elCloseBtn2 = document.querySelectorAll(".cancel");
-const elItem = document.querySelector(".item");
-const elModalDeleteBtn = document.querySelector(".delete");
-const elDeleteModalSpan = document.querySelector(".delete-modal-title-span");
-const elBtns = document.querySelectorAll(".item_btn_more");
-const ellink = document.querySelectorAll(".link");
-elDeletebtn.forEach((el) => {
-    el.onclick = () => {
-        elDeleteModalDiv.classList.toggle("block");
-        ItemId = Number(el.dataset.id);
-        let find = filmsList.find((el) => Number(el.id) == Number(ItemId));
-        elDeleteModalSpan.innerHTML = find === null || find === void 0 ? void 0 : find.title;
-        console.log("Click");
-    };
-});
-elCloseBtn.forEach((el) => {
-    el.onclick = () => {
-        elDeleteModalDiv.classList.remove("block");
-    };
-});
-elCloseBtn2.forEach((el) => {
-    el.onclick = () => {
-        elDeleteModalDiv.classList.remove("block");
-    };
-});
-elModalDeleteBtn.onclick = () => {
-    let filter = filmsList.filter((el) => Number(el.id) != Number(ItemId));
-    render(filter, elList);
-    elDeleteModalDiv.classList.remove("block");
-};
+let id = new URLSearchParams(window.location.search).get("id");
+let find = filmList.find((el) => el.id == id);
+console.log(find);
+const elDiv = document.querySelector(".div");
+elDiv.innerHTML = `
+<a class="back" href="./index.html" >back</a>
+  <li class="item">
+    <img class="item_img" src="${find === null || find === void 0 ? void 0 : find.poster}" alt="">
+    <div class="item_text">
+      <p class="item_id">id: ${find === null || find === void 0 ? void 0 : find.id}</p>
+      <p class="item_title">title: ${find === null || find === void 0 ? void 0 : find.title}</p>
+      <p class="item_release_date">date: ${new Date(((_a = find === null || find === void 0 ? void 0 : find.release_date) !== null && _a !== void 0 ? _a : 0) * 1000).getFullYear()}</p>
+      <p class="item_genres">genres: ${(_b = find === null || find === void 0 ? void 0 : find.genres) === null || _b === void 0 ? void 0 : _b.join(", ")}</p>
+      <div class="item_btns">
+        <button class="item__btn item_btn_delete" data-id="${find === null || find === void 0 ? void 0 : find.id}">delete</button>
+        <button class="item__btn item_btn_edit">edit</button>
+      </div>
+    </div>
+  </li>
+`;
