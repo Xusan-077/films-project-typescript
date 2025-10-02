@@ -372,6 +372,15 @@ const elSearchForm = document.querySelector(".search-form");
 const elSearchInput = document.querySelector(".search-input");
 const elSearchBtn = document.querySelector(".btn-search");
 const elSearchVoiceBtn = document.querySelector(".btn-voice");
+const elDeletebtn = document.querySelectorAll(".item_btn_delete");
+const elDeleteModalDiv = document.querySelector(".modal-div");
+const elCloseBtn = document.querySelectorAll(".delete-modal-x-btn");
+const elCloseBtn2 = document.querySelectorAll(".cancel");
+const elItem = document.querySelector(".item");
+const elModalDeleteBtn = document.querySelector(".delete");
+const elDeleteModalSpan = document.querySelector(".delete-modal-title-span");
+const elBtns = document.querySelectorAll(".item_btn_more");
+const ellink = document.querySelectorAll(".link");
 function render(array, list) {
     list.innerHTML = "";
     array.forEach((el) => {
@@ -440,9 +449,9 @@ elSortToGenresForm.onsubmit = (evt) => {
 };
 elSearchVoiceBtn.onclick = (evt) => {
     evt.preventDefault();
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     let record = new SpeechRecognition();
     record.start();
+    elSearchInput.value = '';
     record.onresult = (event) => {
         elSearchInput.value = event.results[0][0].transcript;
     };
@@ -458,24 +467,12 @@ elSearchForm.onclick = (evt) => {
         elList.appendChild(p);
     }
 };
-render(filmsList, elList);
-renderGenres();
-const elDeletebtn = document.querySelectorAll(".item_btn_delete");
-const elDeleteModalDiv = document.querySelector(".modal-div");
-const elCloseBtn = document.querySelectorAll(".delete-modal-x-btn");
-const elCloseBtn2 = document.querySelectorAll(".cancel");
-const elItem = document.querySelector(".item");
-const elModalDeleteBtn = document.querySelector(".delete");
-const elDeleteModalSpan = document.querySelector(".delete-modal-title-span");
-const elBtns = document.querySelectorAll(".item_btn_more");
-const ellink = document.querySelectorAll(".link");
 elDeletebtn.forEach((el) => {
     el.onclick = () => {
         elDeleteModalDiv.classList.toggle("block");
         ItemId = Number(el.dataset.id);
         let find = filmsList.find((el) => Number(el.id) == Number(ItemId));
         elDeleteModalSpan.innerHTML = find === null || find === void 0 ? void 0 : find.title;
-        console.log("Click");
     };
 });
 elCloseBtn.forEach((el) => {
@@ -493,3 +490,5 @@ elModalDeleteBtn.onclick = () => {
     render(filter, elList);
     elDeleteModalDiv.classList.remove("block");
 };
+render(filmsList, elList);
+renderGenres();

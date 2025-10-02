@@ -502,6 +502,8 @@ elSearchVoiceBtn.onclick = (evt: Event) => {
 
   record.start();
 
+  elSearchInput.value = ''
+
   record.onresult = (event: any) => {
     elSearchInput.value = event.results[0][0].transcript;
   };
@@ -531,7 +533,6 @@ elDeletebtn.forEach((el) => {
 
     let find = filmsList.find((el) => Number(el.id) == Number(ItemId))
     elDeleteModalSpan.innerHTML = find?.title!
-    console.log("Click");
   }
 })
 
