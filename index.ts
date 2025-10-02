@@ -498,9 +498,6 @@ elSortToGenresForm.onsubmit = (evt: Event) => {
 
 elSearchVoiceBtn.onclick = (evt: Event) => {
   evt.preventDefault();
-  const SpeechRecognition =
-    (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-
   let record = new SpeechRecognition();
 
   record.start();
