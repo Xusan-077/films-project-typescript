@@ -370,6 +370,8 @@ const elSortToLetterForm = document.querySelector(".sort-form");
 const elSortToLetterSelect = document.querySelector(".sort-select");
 const elSearchForm = document.querySelector(".search-form");
 const elSearchInput = document.querySelector(".search-input");
+const elSearchBtn = document.querySelector(".btn-search");
+const elSearchVoiceBtn = document.querySelector(".btn-voice");
 function render(array, list) {
     list.innerHTML = "";
     array.forEach((el) => {
@@ -436,7 +438,16 @@ elSortToGenresForm.onsubmit = (evt) => {
         render(filter, elList);
     }
 };
-elSearchForm.onsubmit = (evt) => {
+elSearchVoiceBtn.onclick = (evt) => {
+    evt.preventDefault();
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let record = new SpeechRecognition();
+    record.start();
+    record.onresult = (event) => {
+        elSearchInput.value = event.results[0][0].transcript;
+    };
+};
+elSearchForm.onclick = (evt) => {
     evt.preventDefault();
     let filter = filmsList.filter((el) => el.title.toLowerCase().includes(elSearchInput.value.toLocaleLowerCase()));
     render(filter, elList);

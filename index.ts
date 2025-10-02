@@ -379,8 +379,8 @@ type filmobj = {
   genres: string[];
 }
 
-let ItemId: number;
 
+let ItemId: number;
 
 const elList = document.querySelector(".list") as HTMLUListElement;
 
@@ -388,7 +388,6 @@ const elSortToGenresSelect = document.querySelector(
   ".sort-from-genres-select"
 ) as HTMLSelectElement;
 const elSortToGenresForm = document.querySelector(".sort-from-genres-form") as HTMLFormElement
-
 
 const elSelectForm = document.querySelector(
   ".search-form"
@@ -401,6 +400,23 @@ const elSearchForm = document.querySelector(".search-form") as HTMLFormElement
 const elSearchInput = document.querySelector(".search-input") as HTMLInputElement
 
 const elSearchBtn = document.querySelector(".btn-search") as HTMLButtonElement
+const elSearchVoiceBtn = document.querySelector(".btn-voice") as HTMLButtonElement
+
+const elDeletebtn = document.querySelectorAll<HTMLButtonElement>(".item_btn_delete")
+const elDeleteModalDiv = document.querySelector(".modal-div") as HTMLDivElement
+
+const elCloseBtn = document.querySelectorAll<HTMLButtonElement>(".delete-modal-x-btn")
+const elCloseBtn2 = document.querySelectorAll<HTMLButtonElement>(".cancel")
+
+const elItem = document.querySelector(".item") as HTMLLIElement
+
+const elModalDeleteBtn = document.querySelector(".delete") as HTMLButtonElement
+
+const elDeleteModalSpan = document.querySelector(".delete-modal-title-span") as HTMLSpanElement
+
+const elBtns = document.querySelectorAll<HTMLLIElement>(".item_btn_more")
+
+const ellink = document.querySelectorAll<HTMLLinkElement>(".link")
 
 function render(array: filmType, list: HTMLUListElement) {
   list.innerHTML = "";
@@ -480,7 +496,22 @@ elSortToGenresForm.onsubmit = (evt: Event) => {
   }
 }
 
-elSearchBtn.onclick = () => {
+elSearchVoiceBtn.onclick = (evt: Event) => {
+  evt.preventDefault();
+  const SpeechRecognition =
+    (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+
+  let record = new SpeechRecognition();
+
+  record.start();
+
+  record.onresult = (event: any) => {
+    elSearchInput.value = event.results[0][0].transcript;
+  };
+}
+
+elSearchForm.onclick = (evt: Event) => {
+  evt.preventDefault()
 
   let filter = filmsList.filter((el) => el.title.toLowerCase().includes(elSearchInput.value.toLocaleLowerCase()))
 
@@ -494,25 +525,6 @@ elSearchBtn.onclick = () => {
     elList.appendChild(p)
   }
 }
-
-render(filmsList, elList);
-renderGenres();
-
-const elDeletebtn = document.querySelectorAll<HTMLButtonElement>(".item_btn_delete")
-const elDeleteModalDiv = document.querySelector(".modal-div") as HTMLDivElement
-
-const elCloseBtn = document.querySelectorAll<HTMLButtonElement>(".delete-modal-x-btn")
-const elCloseBtn2 = document.querySelectorAll<HTMLButtonElement>(".cancel")
-
-const elItem = document.querySelector(".item") as HTMLLIElement
-
-const elModalDeleteBtn = document.querySelector(".delete") as HTMLButtonElement
-
-const elDeleteModalSpan = document.querySelector(".delete-modal-title-span") as HTMLSpanElement
-
-const elBtns = document.querySelectorAll<HTMLLIElement>(".item_btn_more")
-
-const ellink = document.querySelectorAll<HTMLLinkElement>(".link")
 
 elDeletebtn.forEach((el) => {
   el.onclick = () => {
@@ -544,3 +556,6 @@ elModalDeleteBtn.onclick = () => {
   render(filter, elList)
   elDeleteModalDiv.classList.remove("block")
 }
+
+render(filmsList, elList);
+renderGenres();
