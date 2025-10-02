@@ -378,20 +378,34 @@ console.log(find);
 const elDiv = document.querySelector(".div") as HTMLDivElement
 
 elDiv.innerHTML = `
-<a class="back" href="./index.html" >back</a>
-  <li class="item">
-    <img class="item_img" src="${find?.poster}" alt="">
-    <div class="item_text">
-      <p class="item_id">id: ${find?.id}</p>
-      <p class="item_title">title: ${find?.title}</p>
-      <p class="item_release_date">date: ${new Date(
-    (find?.release_date ?? 0) * 1000
-).getFullYear()}</p>
-      <p class="item_genres">genres: ${find?.genres?.join(", ")}</p>
-      <div class="item_btns">
-        <button class="item__btn item_btn_delete" data-id="${find?.id}">delete</button>
-        <button class="item__btn item_btn_edit">edit</button>
-      </div>
+
+<li class="movie-card">
+    <img class="movie-card__img" src="${find?.poster}" alt="">
+    <div class="movie-card__content">
+        <p class="movie-card__id">
+            <span class="movie-card__span">ID:</span> ${find?.id}
+        </p>
+        <p class="movie-card__title"><span class="movie-card__span">Title:</span> ${find?.title}</p>
+        <p class="movie-card__release-date">
+            <span class="movie-card__span">
+                Date:
+            </span>
+            ${new Date(Number(find?.release_date) * 1000).getFullYear()}
+        </p>
+        <p class="movie-card__genres">
+            <span class="movie-card__span">
+                Genres:
+            </span> ${find?.genres?.join(", ")}
+        </p>
+
+        <div class="movie-card__actions">
+        <div class="movie-card__group">
+        <button class="btn item_btn_delete" data-id="${find?.id}">Delete</button>
+        <button class="btn item_btn_edit">Edit</button>
+        </div>
+        <a class="btn btn--back" href="./index.html">Back</a>
+        </div>
     </div>
-  </li>
+</li>
+
 `;

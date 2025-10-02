@@ -274,4 +274,44 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
+}
+
+.movie-card {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    gap: 50px;
+}
+
+.movie-card__img {
+    width: 300px;
+}
+
+.movie-card__id {
+    font-size: 20px;
+}
+
+.movie-card__span {
+    color: red;
+    font-size: 22px;
+}
+
+.movie-card p {
+    margin-bottom: 10px;
+}
+
+.btn--back {
+    background-color: #009;
+    width: 165px;
+    margin-top: 10px;
+    text-align: center;
+    padding: 10px 0;
+    border-radius: 10px;
+    font-size: 20px;
+    color: #fff;
+}
+
+a {
+    display: inline-block;
 }

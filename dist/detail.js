@@ -1,5 +1,5 @@
 "use strict";
-var _a, _b;
+var _a;
 let filmList = [
     {
         id: "287947",
@@ -367,18 +367,34 @@ let find = filmList.find((el) => el.id == id);
 console.log(find);
 const elDiv = document.querySelector(".div");
 elDiv.innerHTML = `
-<a class="back" href="./index.html" >back</a>
-  <li class="item">
-    <img class="item_img" src="${find === null || find === void 0 ? void 0 : find.poster}" alt="">
-    <div class="item_text">
-      <p class="item_id">id: ${find === null || find === void 0 ? void 0 : find.id}</p>
-      <p class="item_title">title: ${find === null || find === void 0 ? void 0 : find.title}</p>
-      <p class="item_release_date">date: ${new Date(((_a = find === null || find === void 0 ? void 0 : find.release_date) !== null && _a !== void 0 ? _a : 0) * 1000).getFullYear()}</p>
-      <p class="item_genres">genres: ${(_b = find === null || find === void 0 ? void 0 : find.genres) === null || _b === void 0 ? void 0 : _b.join(", ")}</p>
-      <div class="item_btns">
-        <button class="item__btn item_btn_delete" data-id="${find === null || find === void 0 ? void 0 : find.id}">delete</button>
-        <button class="item__btn item_btn_edit">edit</button>
-      </div>
+
+<li class="movie-card">
+    <img class="movie-card__img" src="${find === null || find === void 0 ? void 0 : find.poster}" alt="">
+    <div class="movie-card__content">
+        <p class="movie-card__id">
+            <span class="movie-card__span">ID:</span> ${find === null || find === void 0 ? void 0 : find.id}
+        </p>
+        <p class="movie-card__title"><span class="movie-card__span">Title:</span> ${find === null || find === void 0 ? void 0 : find.title}</p>
+        <p class="movie-card__release-date">
+            <span class="movie-card__span">
+                Date:
+            </span>
+            ${new Date(Number(find === null || find === void 0 ? void 0 : find.release_date) * 1000).getFullYear()}
+        </p>
+        <p class="movie-card__genres">
+            <span class="movie-card__span">
+                Genres:
+            </span> ${(_a = find === null || find === void 0 ? void 0 : find.genres) === null || _a === void 0 ? void 0 : _a.join(", ")}
+        </p>
+
+        <div class="movie-card__actions">
+        <div class="movie-card__group">
+        <button class="btn item_btn_delete" data-id="${find === null || find === void 0 ? void 0 : find.id}">Delete</button>
+        <button class="btn item_btn_edit">Edit</button>
+        </div>
+        <a class="btn btn--back" href="./index.html">Back</a>
+        </div>
     </div>
-  </li>
+</li>
+
 `;
