@@ -400,6 +400,8 @@ const elSortToLetterSelect = document.querySelector(".sort-select") as HTMLSelec
 const elSearchForm = document.querySelector(".search-form") as HTMLFormElement
 const elSearchInput = document.querySelector(".search-input") as HTMLInputElement
 
+const elSearchBtn = document.querySelector(".btn-search") as HTMLButtonElement
+
 function render(array: filmType, list: HTMLUListElement) {
   list.innerHTML = "";
 
@@ -478,8 +480,7 @@ elSortToGenresForm.onsubmit = (evt: Event) => {
   }
 }
 
-elSearchForm.onsubmit = (evt: Event) => {
-  evt.preventDefault()
+elSearchBtn.onclick = () => {
 
   let filter = filmsList.filter((el) => el.title.toLowerCase().includes(elSearchInput.value.toLocaleLowerCase()))
 
