@@ -379,6 +379,8 @@ type filmobj = {
   genres: string[];
 }
 
+let storedFavorites = localStorage.getItem("favorite");
+let favorite: filmType = storedFavorites ? JSON.parse(storedFavorites) : [];
 
 let ItemId: number;
 
@@ -411,34 +413,30 @@ const elBtns = document.querySelectorAll<HTMLLIElement>(".item_btn_more")
 
 const ellink = document.querySelectorAll<HTMLLinkElement>(".link")
 
+
 async function render(array: filmType, list: HTMLUListElement) {
   list.innerHTML = "";
 
   array.forEach((el) => {
     list.innerHTML += `
-             <li class="item">
+<li class="item">
 
-            <img class="item_img" src="${el.poster}" alt="">
-            <div class="item_text">
-                <p class="item_id">id: ${el.id}</p>
-                <p class="item_title">title: ${el.title}</p>
-                <p class="item_release_date">date: ${new Date(
+    <img class="item_img" src="${el.poster}" alt="">
+    <div class="item_text">
+        <p class="item_id">id: ${el.id}</p>
+        <p class="item_title">title: ${el.title}</p>
+        <p class="item_release_date">date: ${new Date(
       el.release_date * 1000
     ).getFullYear()}</p>
-                <p class="item_genres">genres: ${el.genres}</p>
-                <div class="item_btns">
-                    <div class="btn-div">
-                        <button class="item__btn item_btn_delete" data-id="${el.id}">delete</button>
-                        <button class="item__btn item_btn_edit">edit</button>
-                    </div>
-
-                    <a class="link" href="./detail.html?id=${el.id}">
-                        more
-                    </a>
-
-                </div>
-            </div>
-        </li>
+        <p class="item_genres">genres: ${el.genres}</p>
+        <div class="item_btns">
+          <a class="link" href="./detail.html?id=${el.id}">
+            more
+          </a>
+          <button data-id="${el.id}" class="item__btn item_btn_favorite">favorite</button>
+        </div>
+    </div>
+</li>
     `;
   });
 }
@@ -462,6 +460,7 @@ async function renderGenres() {
 
 render(filmsList, elList);
 renderGenres();
+
 
 elSortToLetterForm.onsubmit = (evt: Event) => {
   evt.preventDefault();
@@ -521,40 +520,26 @@ elSearchForm.onclick = (evt: Event) => {
   }
 }
 
-const elDeletebtn = document.querySelectorAll<HTMLButtonElement>(".item_btn_delete")
-const elDeleteModalDiv = document.querySelector(".modal-div") as HTMLDivElement
+const elFavorite = document.querySelectorAll<HTMLButtonElement>(".item_btn_favorite")
 
-const elCloseBtn = document.querySelectorAll<HTMLButtonElement>(".delete-modal-x-btn")
-const elCloseBtn2 = document.querySelectorAll<HTMLButtonElement>(".cancel")
+elFavorite.forEach((btn) => {
+  btn.onclick = () => {
+    let id = btn.dataset.id;
 
-const elModalDeleteBtn = document.querySelector(".delete") as HTMLButtonElement
+    let find: filmobj | undefined = filmsList.find(
+      (el) => Number(el.id) === Number(id)
+    );
 
-elDeletebtn.forEach((el) => {
-  el.onclick = () => {
-    elDeleteModalDiv.classList.add("block")
+    if (find) {
+      let exists = favorite.forEach((el) => el.id !== find.id);
 
-    ItemId = Number(el.dataset.id);
+      console.log(exists);
 
-    let find = filmsList.find((el) => Number(el.id) == Number(ItemId))
-    elDeleteModalSpan.innerHTML = find?.title!
-  }
-})
 
-elCloseBtn.forEach((el) => {
-  el.onclick = () => {
-    elDeleteModalDiv.classList.remove("block")
-  }
-})
-
-elCloseBtn2.forEach((el) => {
-  el.onclick = () => {
-    elDeleteModalDiv.classList.remove("block")
-  }
-})
-
-elModalDeleteBtn.onclick = () => {
-  let filter = filmsList.filter((el) => Number(el.id) != Number(ItemId))
-
-  render(filter, elList)
-  elDeleteModalDiv.classList.remove("block")
-}
+      // if () {
+      favorite.push(find);
+      localStorage.setItem("favorite", JSON.stringify(favorite));
+      // }
+    }
+  };
+});

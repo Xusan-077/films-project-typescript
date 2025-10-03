@@ -370,6 +370,8 @@ let filmsList = [
         genres: ["Music", "Documentary"],
     },
 ];
+let storedFavorites = localStorage.getItem("favorite");
+let favorite = storedFavorites ? JSON.parse(storedFavorites) : [];
 let ItemId;
 const elList = document.querySelector(".list");
 const elSortToGenresSelect = document.querySelector(".sort-from-genres-select");
@@ -390,27 +392,22 @@ function render(array, list) {
         list.innerHTML = "";
         array.forEach((el) => {
             list.innerHTML += `
-             <li class="item">
+<li class="item">
 
-            <img class="item_img" src="${el.poster}" alt="">
-            <div class="item_text">
-                <p class="item_id">id: ${el.id}</p>
-                <p class="item_title">title: ${el.title}</p>
-                <p class="item_release_date">date: ${new Date(el.release_date * 1000).getFullYear()}</p>
-                <p class="item_genres">genres: ${el.genres}</p>
-                <div class="item_btns">
-                    <div class="btn-div">
-                        <button class="item__btn item_btn_delete" data-id="${el.id}">delete</button>
-                        <button class="item__btn item_btn_edit">edit</button>
-                    </div>
-
-                    <a class="link" href="./detail.html?id=${el.id}">
-                        more
-                    </a>
-
-                </div>
-            </div>
-        </li>
+    <img class="item_img" src="${el.poster}" alt="">
+    <div class="item_text">
+        <p class="item_id">id: ${el.id}</p>
+        <p class="item_title">title: ${el.title}</p>
+        <p class="item_release_date">date: ${new Date(el.release_date * 1000).getFullYear()}</p>
+        <p class="item_genres">genres: ${el.genres}</p>
+        <div class="item_btns">
+          <a class="link" href="./detail.html?id=${el.id}">
+            more
+          </a>
+          <button data-id="${el.id}" class="item__btn item_btn_favorite">favorite</button>
+        </div>
+    </div>
+</li>
     `;
         });
     });
@@ -477,31 +474,18 @@ elSearchForm.onclick = (evt) => {
         elList.appendChild(p);
     }
 };
-const elDeletebtn = document.querySelectorAll(".item_btn_delete");
-const elDeleteModalDiv = document.querySelector(".modal-div");
-const elCloseBtn = document.querySelectorAll(".delete-modal-x-btn");
-const elCloseBtn2 = document.querySelectorAll(".cancel");
-const elModalDeleteBtn = document.querySelector(".delete");
-elDeletebtn.forEach((el) => {
-    el.onclick = () => {
-        elDeleteModalDiv.classList.add("block");
-        ItemId = Number(el.dataset.id);
-        let find = filmsList.find((el) => Number(el.id) == Number(ItemId));
-        elDeleteModalSpan.innerHTML = find === null || find === void 0 ? void 0 : find.title;
+const elFavorite = document.querySelectorAll(".item_btn_favorite");
+elFavorite.forEach((btn) => {
+    btn.onclick = () => {
+        let id = btn.dataset.id;
+        let find = filmsList.find((el) => Number(el.id) === Number(id));
+        if (find) {
+            favorite.some((el) => {
+                if (el.id !== find.id) {
+                    favorite.push(find);
+                    localStorage.setItem("favorite", JSON.stringify(favorite));
+                }
+            });
+        }
     };
 });
-elCloseBtn.forEach((el) => {
-    el.onclick = () => {
-        elDeleteModalDiv.classList.remove("block");
-    };
-});
-elCloseBtn2.forEach((el) => {
-    el.onclick = () => {
-        elDeleteModalDiv.classList.remove("block");
-    };
-});
-elModalDeleteBtn.onclick = () => {
-    let filter = filmsList.filter((el) => Number(el.id) != Number(ItemId));
-    render(filter, elList);
-    elDeleteModalDiv.classList.remove("block");
-};

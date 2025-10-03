@@ -82,7 +82,7 @@ button {
 .link,
 .btn-div {
     display: flex;
-    gap: 20px;
+    gap: 10px;
 }
 
 .item_img {
@@ -241,9 +241,21 @@ button {
 }
 
 .link {
-    width: 180px;
+    width: 50%;
     margin-top: 10px;
     background-color: orange;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 18px;
+}
+
+.item_btn_favorite {
+    width: 50%;
+    margin-top: 10px;
+    background-color: #009;
     display: flex;
     justify-content: center;
     padding: 10px;
