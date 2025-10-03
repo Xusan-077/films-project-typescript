@@ -240,10 +240,6 @@ button {
     background: #dcdde1;
 }
 
-.block {
-    display: flex;
-}
-
 .link {
     width: 180px;
     margin-top: 10px;
@@ -330,4 +326,8 @@ a {
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.block {
+    display: flex;
 }

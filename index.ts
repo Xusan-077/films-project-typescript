@@ -402,15 +402,8 @@ const elSearchInput = document.querySelector(".search-input") as HTMLInputElemen
 const elSearchBtn = document.querySelector(".btn-search") as HTMLButtonElement
 const elSearchVoiceBtn = document.querySelector(".btn-voice") as HTMLButtonElement
 
-const elDeletebtn = document.querySelectorAll<HTMLButtonElement>(".item_btn_delete")
-const elDeleteModalDiv = document.querySelector(".modal-div") as HTMLDivElement
-
-const elCloseBtn = document.querySelectorAll<HTMLButtonElement>(".delete-modal-x-btn")
-const elCloseBtn2 = document.querySelectorAll<HTMLButtonElement>(".cancel")
-
 const elItem = document.querySelector(".item") as HTMLLIElement
 
-const elModalDeleteBtn = document.querySelector(".delete") as HTMLButtonElement
 
 const elDeleteModalSpan = document.querySelector(".delete-modal-title-span") as HTMLSpanElement
 
@@ -418,7 +411,7 @@ const elBtns = document.querySelectorAll<HTMLLIElement>(".item_btn_more")
 
 const ellink = document.querySelectorAll<HTMLLinkElement>(".link")
 
-function render(array: filmType, list: HTMLUListElement) {
+async function render(array: filmType, list: HTMLUListElement) {
   list.innerHTML = "";
 
   array.forEach((el) => {
@@ -450,7 +443,7 @@ function render(array: filmType, list: HTMLUListElement) {
   });
 }
 
-function renderGenres() {
+async function renderGenres() {
   const reduce = filmsList.reduce((total: string[], el) => {
     el.genres.forEach((g) => {
       if (!total.includes(g)) {
@@ -466,6 +459,9 @@ function renderGenres() {
       `;
   });
 }
+
+render(filmsList, elList);
+renderGenres();
 
 elSortToLetterForm.onsubmit = (evt: Event) => {
   evt.preventDefault();
@@ -525,9 +521,17 @@ elSearchForm.onclick = (evt: Event) => {
   }
 }
 
+const elDeletebtn = document.querySelectorAll<HTMLButtonElement>(".item_btn_delete")
+const elDeleteModalDiv = document.querySelector(".modal-div") as HTMLDivElement
+
+const elCloseBtn = document.querySelectorAll<HTMLButtonElement>(".delete-modal-x-btn")
+const elCloseBtn2 = document.querySelectorAll<HTMLButtonElement>(".cancel")
+
+const elModalDeleteBtn = document.querySelector(".delete") as HTMLButtonElement
+
 elDeletebtn.forEach((el) => {
   el.onclick = () => {
-    elDeleteModalDiv.classList.toggle("block")
+    elDeleteModalDiv.classList.add("block")
 
     ItemId = Number(el.dataset.id);
 
@@ -554,6 +558,3 @@ elModalDeleteBtn.onclick = () => {
   render(filter, elList)
   elDeleteModalDiv.classList.remove("block")
 }
-
-render(filmsList, elList);
-renderGenres();

@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 let filmsList = [
     {
         id: "287947",
@@ -372,19 +381,15 @@ const elSearchForm = document.querySelector(".search-form");
 const elSearchInput = document.querySelector(".search-input");
 const elSearchBtn = document.querySelector(".btn-search");
 const elSearchVoiceBtn = document.querySelector(".btn-voice");
-const elDeletebtn = document.querySelectorAll(".item_btn_delete");
-const elDeleteModalDiv = document.querySelector(".modal-div");
-const elCloseBtn = document.querySelectorAll(".delete-modal-x-btn");
-const elCloseBtn2 = document.querySelectorAll(".cancel");
 const elItem = document.querySelector(".item");
-const elModalDeleteBtn = document.querySelector(".delete");
 const elDeleteModalSpan = document.querySelector(".delete-modal-title-span");
 const elBtns = document.querySelectorAll(".item_btn_more");
 const ellink = document.querySelectorAll(".link");
 function render(array, list) {
-    list.innerHTML = "";
-    array.forEach((el) => {
-        list.innerHTML += `
+    return __awaiter(this, void 0, void 0, function* () {
+        list.innerHTML = "";
+        array.forEach((el) => {
+            list.innerHTML += `
              <li class="item">
 
             <img class="item_img" src="${el.poster}" alt="">
@@ -407,23 +412,28 @@ function render(array, list) {
             </div>
         </li>
     `;
+        });
     });
 }
 function renderGenres() {
-    const reduce = filmsList.reduce((total, el) => {
-        el.genres.forEach((g) => {
-            if (!total.includes(g)) {
-                total.push(g);
-            }
-        });
-        return total;
-    }, []);
-    reduce.forEach((el) => {
-        elSortToGenresSelect.innerHTML += `
+    return __awaiter(this, void 0, void 0, function* () {
+        const reduce = filmsList.reduce((total, el) => {
+            el.genres.forEach((g) => {
+                if (!total.includes(g)) {
+                    total.push(g);
+                }
+            });
+            return total;
+        }, []);
+        reduce.forEach((el) => {
+            elSortToGenresSelect.innerHTML += `
         <option value="${el}">${el}</option>
       `;
+        });
     });
 }
+render(filmsList, elList);
+renderGenres();
 elSortToLetterForm.onsubmit = (evt) => {
     evt.preventDefault();
     if (elSortToLetterSelect.value === "All") {
@@ -467,9 +477,14 @@ elSearchForm.onclick = (evt) => {
         elList.appendChild(p);
     }
 };
+const elDeletebtn = document.querySelectorAll(".item_btn_delete");
+const elDeleteModalDiv = document.querySelector(".modal-div");
+const elCloseBtn = document.querySelectorAll(".delete-modal-x-btn");
+const elCloseBtn2 = document.querySelectorAll(".cancel");
+const elModalDeleteBtn = document.querySelector(".delete");
 elDeletebtn.forEach((el) => {
     el.onclick = () => {
-        elDeleteModalDiv.classList.toggle("block");
+        elDeleteModalDiv.classList.add("block");
         ItemId = Number(el.dataset.id);
         let find = filmsList.find((el) => Number(el.id) == Number(ItemId));
         elDeleteModalSpan.innerHTML = find === null || find === void 0 ? void 0 : find.title;
@@ -490,5 +505,3 @@ elModalDeleteBtn.onclick = () => {
     render(filter, elList);
     elDeleteModalDiv.classList.remove("block");
 };
-render(filmsList, elList);
-renderGenres();
