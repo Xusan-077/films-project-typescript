@@ -72,6 +72,17 @@ button {
     cursor: pointer;
 }
 
+.favorite__btn {
+    padding: 12px 18px;
+    min-width: 80px;
+    border-radius: 10px;
+    border: none;
+    background: #009;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+}
+
 .list {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -252,6 +263,18 @@ button {
     font-size: 18px;
 }
 
+.unfavorite {
+    width: 50%;
+    margin-top: 10px;
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 18px;
+}
+
 .item_btn_favorite {
     width: 50%;
     margin-top: 10px;
@@ -320,6 +343,20 @@ button {
     color: #fff;
 }
 
+.favorite-back {
+    background-color: #009;
+    width: 165px;
+    margin-top: 10px;
+    text-align: center;
+    padding: 20px 0;
+    border-radius: 10px;
+    font-size: 20px;
+    color: #fff;
+    position: fixed;
+    right: 40px;
+    bottom: 40px;
+}
+
 a {
     display: inline-block;
 }
@@ -342,4 +379,15 @@ a {
 
 .block {
     display: flex;
+}
+
+.favorite-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.listspan {
+    font-size: 40px;
+    color: red;
 }

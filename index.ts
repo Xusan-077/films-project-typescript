@@ -531,15 +531,16 @@ elFavorite.forEach((btn) => {
     );
 
     if (find) {
-      let exists = favorite.forEach((el) => el.id !== find.id);
+      let trueOrFalse = favorite.find((el) => el.id == find.id)
 
-      console.log(exists);
+      if (!trueOrFalse) {
+        favorite.push(find);
+        alert(`${find.title} favoritega saqlandi!`)
+      } else {
+        alert(`${find.title} favoritega saqlangan!`)
+      }
 
-
-      // if () {
-      favorite.push(find);
       localStorage.setItem("favorite", JSON.stringify(favorite));
-      // }
     }
   };
 });

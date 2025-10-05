@@ -399,10 +399,6 @@ elDiv.innerHTML = `
         </p>
 
         <div class="movie-card__actions">
-        <div class="movie-card__group">
-        <button class="btn item_btn_delete" data-id="${find?.id}">Delete</button>
-        <button class="btn item_btn_edit">Edit</button>
-        </div>
         <a class="btn btn--back" href="./index.html">Back</a>
         </div>
     </div>

@@ -480,12 +480,15 @@ elFavorite.forEach((btn) => {
         let id = btn.dataset.id;
         let find = filmsList.find((el) => Number(el.id) === Number(id));
         if (find) {
-            favorite.some((el) => {
-                if (el.id !== find.id) {
-                    favorite.push(find);
-                    localStorage.setItem("favorite", JSON.stringify(favorite));
-                }
-            });
+            let trueOrFalse = favorite.find((el) => el.id == find.id);
+            if (!trueOrFalse) {
+                favorite.push(find);
+                alert(`${find.title} favoritega saqlandi!`);
+            }
+            else {
+                alert(`${find.title} favoritega saqlangan!`);
+            }
+            localStorage.setItem("favorite", JSON.stringify(favorite));
         }
     };
 });
